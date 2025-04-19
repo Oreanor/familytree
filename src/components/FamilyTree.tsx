@@ -2,47 +2,9 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Card from './Card';
 import PersonModal from './PersonModal';
 import data from '../data/family-tree.json'
-import { getRelationship, formatYearsOfLife, getMaxLevel } from '../utils/familyUtils';
-
-
-interface Person {
-  id: string;
-  lastName?: string;
-  firstName?: string;
-  middleName?: string;
-  birthDate?: string;
-  deathDate?: string;
-  fatherId?: string;
-  motherId?: string;
-  photoUrl?: string;
-  description?: string;
-  additionalPhotos?: Array<{
-    url: string;
-    caption: string;
-  }>;
-}
-
-interface ProcessedPerson {
-  id: string;
-  name: string;
-  yearsOfLife: string;
-  photoUrl?: string;
-  father?: ProcessedPerson;
-  mother?: ProcessedPerson;
-  description?: string;
-  additionalPhotos?: Array<{
-    url: string;
-    caption: string;
-  }>;
-}
-
-interface CardPosition {
-  person: ProcessedPerson;
-  x: number;
-  y: number;
-  relationship: string;
-  level: number;
-}
+import { getMaxLevel } from '../utils/familyUtils';
+import { Person, ProcessedPerson, CardPosition } from '../types/person';
+import { processPerson, calculateInitialPositions } from '../utils/treeUtils';
 
 const FamilyTree: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,105 +17,13 @@ const FamilyTree: React.FC = () => {
   const [offsetY, setOffsetY] = useState(200);
   const [selectedPerson, setSelectedPerson] = useState<ProcessedPerson | null>(null);
 
-  // Перемещаем функцию processPerson перед useMemo
-  const processPerson = (personId: string): ProcessedPerson | undefined => {
-    const person = (data as any[]).find((p) => p.id === personId);
-    if (!person || !person.birthDate) return undefined;
-    
-    // Форматируем имя как "Фамилия И.О."
-    const lastName = person.lastName || '';
-    const firstNameInitial = person.firstName ? person.firstName.charAt(0) + '.' : '';
-    const middleNameInitial = person.middleName ? person.middleName.charAt(0) + '.' : '';
-    const formattedName = `${lastName} ${firstNameInitial} ${middleNameInitial}`.trim();
-    
-    return {
-      id: person.id,
-      name: formattedName,
-      yearsOfLife: formatYearsOfLife(person.birthDate, person.deathDate || undefined),
-      photoUrl: person.photoUrl,
-      father: person.fatherId ? processPerson(person.fatherId) : undefined,
-      mother: person.motherId ? processPerson(person.motherId) : undefined
-    };
-  };
-
   // Кэшируем обработку данных с помощью useMemo
   const processedData = useMemo(() => {
-    console.log("Обработка данных...");
-    console.log(data);
-    const result = (data as any[]).filter((person) => person.id === "1").map(person => {
-      return processPerson(person.id);
+    const result = (data as Person[]).filter((person) => person.id === "1").map(person => {
+      return processPerson(person.id, data as Person[]);
     }).filter(Boolean) as ProcessedPerson[];
-    console.log("Обработанные данные:", result);
-    console.log("Обработанные данные длина:", result.length);
     return result;
   }, [data]);
-
-  const calculateInitialPositions = (
-    person: ProcessedPerson, 
-    level: number = 0, 
-    isMotherSide: boolean = false, 
-    baseX: number = 0,
-    isMother: boolean = false,
-    maxLevel: number
-  ): CardPosition[] => {
-    const positions: CardPosition[] = [];
-    const verticalSpacing = 300;
-    // Увеличиваем ширину экрана для большего расстояния между карточками
-    const screenWidth = 3000; // Было 2000
-    const centerX = 0; // Центр экрана (позиция текущего человека)
-
-    // Вычисляем вертикальную позицию
-    const y = (maxLevel - level) * verticalSpacing;
-
-    // Вычисляем горизонтальную позицию в зависимости от уровня
-    let x = centerX; // По умолчанию в центре
-
-    if (level === 0) {
-      // Текущий человек всегда в центре
-      x = centerX;
-    } else {
-      // Для уровней 1 и выше распределяем карточки равномерно
-      const segments = Math.pow(2, level); // Количество сегментов на текущем уровне
-      const segmentWidth = screenWidth / segments; // Ширина одного сегмента
-      
-      // Определяем индекс сегмента для текущей карточки
-      let segmentIndex = 0;
-      
-      if (level === 1) {
-        // Для родителей: отец в левом сегменте, мать в правом
-        segmentIndex = isMother ? 1 : 0;
-      } else {
-        // Для более дальних предков используем baseX для определения сегмента
-        const parentSegmentCount = Math.pow(2, level - 1);
-        const parentSegmentWidth = screenWidth / parentSegmentCount;
-        const parentSegmentIndex = Math.floor((baseX - centerX + screenWidth/2) / parentSegmentWidth);
-        
-        // Определяем, в каком из двух сегментов текущего уровня должна быть карточка
-        const isRightChild = isMother;
-        segmentIndex = parentSegmentIndex * 2 + (isRightChild ? 1 : 0);
-      }
-      
-      // Вычисляем центр сегмента
-      x = centerX - screenWidth/2 + segmentWidth * segmentIndex + segmentWidth/2;
-    }
-
-    positions.push({
-      person,
-      x,
-      y,
-      relationship: getRelationship(level, !isMother),
-      level
-    });
-
-    if (person.father) {
-      positions.push(...calculateInitialPositions(person.father, level + 1, isMotherSide, x, false, maxLevel));
-    }
-    if (person.mother) {
-      positions.push(...calculateInitialPositions(person.mother, level + 1, isMotherSide, x, true, maxLevel));
-    }
-
-    return positions;
-  };
 
   // Кэшируем расчет позиций карточек с помощью useMemo
   const calculatedPositions = useMemo(() => {
@@ -238,7 +108,7 @@ const FamilyTree: React.FC = () => {
 
   const handleCardClick = (person: ProcessedPerson) => {
     // Находим полную информацию о человеке в исходных данных
-    const fullPersonData = (data as any[]).find(p => p.id === person.id);
+    const fullPersonData = (data as Person[]).find(p => p.id === person.id);
     if (fullPersonData) {
       setSelectedPerson({
         ...person,
@@ -281,7 +151,7 @@ const FamilyTree: React.FC = () => {
             const fatherCard = cardPositions.find(p => p.person === childCard.person.father);
             const motherCard = cardPositions.find(p => p.person === childCard.person.mother);
 
-            const cardWidth = 160; // Ширина карточки
+            // const cardWidth = 160; // Ширина карточки
             const cardHeight = 192; // Высота карточки
 
             // Точка начала линии - центр верхней границы карточки потомка минус половина ширины карточки

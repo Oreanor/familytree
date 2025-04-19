@@ -1,18 +1,5 @@
 import React, { useState, useRef } from 'react';
-
-interface CardProps {
-  name: string;
-  yearsOfLife: string;
-  photoUrl?: string;
-  relationship: string;
-  defaultPosition: { x: number; y: number };
-  onClick?: () => void;
-}
-
-interface TooltipPosition {
-  x: number;
-  y: number;
-}
+import { CardProps, TooltipPosition } from '../types/person';
 
 const Card: React.FC<CardProps> = ({ name, yearsOfLife, photoUrl, relationship, defaultPosition, onClick }) => {
   const [tooltipPosition, setTooltipPosition] = useState<TooltipPosition | null>(null);

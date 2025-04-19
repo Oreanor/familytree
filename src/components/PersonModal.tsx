@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CloseIcon, UserIcon, PhotoIcon } from '../icons';
+import { CloseIcon, UserIcon } from '../icons';
 import { PersonModalProps } from '../types/person';
 
 const PersonModal: React.FC<PersonModalProps> = ({ person, onClose }) => {
