@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
-import { CloseIcon, UserIcon } from '../icons';
-import { PersonModalProps } from '../types/person';
+import { createRoot } from 'react-dom/client';
+import CloseIcon from '../icons/CloseIcon';
+import UserIcon from '../icons/UserIcon';
+import PhotoIcon from '../icons/PhotoIcon';
+
+interface PersonModalProps {
+  person: {
+    id: string;
+    lastName: string;
+    firstName: string;
+    middleName: string;
+    yearsOfLife: string;
+    photoUrl?: string;
+    description?: string;
+    additionalPhotos?: Array<{
+      url: string;
+      caption: string;
+    }>;
+  };
+  onClose: () => void;
+}
 
 const PersonModal: React.FC<PersonModalProps> = ({ person, onClose }) => {
   const [mainPhoto, setMainPhoto] = useState<string | undefined>(person.photoUrl);
 
   const handlePhotoClick = (photoUrl: string) => {
-    console.log("Клик по фото:", photoUrl);
-    console.log("Текущий человек:", person.name);
     setMainPhoto(photoUrl);
   };
 
@@ -33,7 +50,7 @@ const PersonModal: React.FC<PersonModalProps> = ({ person, onClose }) => {
           <div className="flex flex-col md:flex-row gap-8 h-full">
             {/* Основная информация и фото */}
             <div className="md:w-3/4 flex flex-col">
-              <h2 className="text-3xl font-bold mb-2 text-left">{person.name}</h2>
+              <h2 className="text-3xl font-bold mb-2 text-left">{person.lastName} {person.firstName} {person.middleName}</h2>
               <p className="text-gray-600 mb-3 text-xl text-left">{person.yearsOfLife}</p>
               {person.description && (
                 <div className="mb-6">
@@ -44,7 +61,7 @@ const PersonModal: React.FC<PersonModalProps> = ({ person, onClose }) => {
                 {mainPhoto ? (
                   <img 
                     src={mainPhoto} 
-                    alt={person.name} 
+                    alt={person.firstName} 
                     className="w-full h-full object-contain rounded-lg"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -53,16 +70,15 @@ const PersonModal: React.FC<PersonModalProps> = ({ person, onClose }) => {
                       if (parent) {
                         const placeholder = document.createElement('div');
                         placeholder.className = 'w-full h-full bg-gray-200 rounded-lg flex items-center justify-center';
-                        const userIcon = document.createElement('div');
-                        userIcon.innerHTML = `<svg class="w-32 h-32 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>`;
-                        placeholder.appendChild(userIcon);
                         parent.appendChild(placeholder);
+                        const root = createRoot(placeholder);
+                        root.render(<UserIcon size={64} />);
                       }
                     }}
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center">
-                    <UserIcon className="w-32 h-32 text-gray-400" />
+                    <UserIcon size={64} />
                   </div>
                 )}
               </div>
@@ -71,18 +87,15 @@ const PersonModal: React.FC<PersonModalProps> = ({ person, onClose }) => {
             {/* Дополнительные фото */}
             {person.additionalPhotos && person.additionalPhotos.length > 0 && (
               <div className="md:w-1/4">
-                <h3 className="text-xl font-semibold mb-4 text-left">Дополнительные фото</h3>
                 <div className="grid grid-cols-1 gap-4">
-                  {person.additionalPhotos.map((photo, index) => (
-                    <div 
-                      key={index} 
-                      className={`relative border-4 ${mainPhoto === photo.url ? 'border-blue-500' : 'border-transparent'} rounded-lg`}
-                      onClick={() => handlePhotoClick(photo.url)}
-                    >
+                  {/* Основное фото как первая превьюшка */}
+                  {person.photoUrl && (
+                    <div className="relative">
                       <img 
-                        src={photo.url} 
-                        alt={photo.caption || `Фото ${index + 1}`} 
+                        src={person.photoUrl} 
+                        alt="Основное фото" 
                         className="w-full h-32 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
+                        onClick={() => handlePhotoClick(person.photoUrl!)}
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.style.display = 'none';
@@ -90,10 +103,33 @@ const PersonModal: React.FC<PersonModalProps> = ({ person, onClose }) => {
                           if (parent) {
                             const placeholder = document.createElement('div');
                             placeholder.className = 'w-full h-32 bg-gray-200 rounded-lg flex items-center justify-center';
-                            const photoIcon = document.createElement('div');
-                            photoIcon.innerHTML = `<svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>`;
-                            placeholder.appendChild(photoIcon);
                             parent.appendChild(placeholder);
+                            const root = createRoot(placeholder);
+                            root.render(<PhotoIcon size={32} />);
+                          }
+                        }}
+                      />
+                      <p className="text-sm text-gray-600 mt-2 truncate text-left">Основное фото</p>
+                    </div>
+                  )}
+                  {/* Остальные дополнительные фото */}
+                  {person.additionalPhotos.map((photo, index) => (
+                    <div key={index} className="relative">
+                      <img 
+                        src={photo.url} 
+                        alt={photo.caption || `Фото ${index + 1}`} 
+                        className="w-full h-32 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
+                        onClick={() => handlePhotoClick(photo.url)}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            const placeholder = document.createElement('div');
+                            placeholder.className = 'w-full h-32 bg-gray-200 rounded-lg flex items-center justify-center';
+                            parent.appendChild(placeholder);
+                            const root = createRoot(placeholder);
+                            root.render(<PhotoIcon size={32} />);
                           }
                         }}
                       />

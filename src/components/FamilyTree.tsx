@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Card from './Card';
 import PersonModal from './PersonModal';
+import JsonModal from './JsonModal';
 import data from '../data/family-tree.json'
-import { getMaxLevel } from '../utils/familyUtils';
 import { Person, ProcessedPerson, CardPosition } from '../types/person';
+import { getMaxLevel } from '../utils/familyUtils';
 import { processPerson, calculateInitialPositions } from '../utils/treeUtils';
 
 const FamilyTree: React.FC = () => {
@@ -16,6 +17,7 @@ const FamilyTree: React.FC = () => {
   const [offsetX, setOffsetX] = useState(800);
   const [offsetY, setOffsetY] = useState(200);
   const [selectedPerson, setSelectedPerson] = useState<ProcessedPerson | null>(null);
+  const [showJsonModal, setShowJsonModal] = useState(false);
 
   // Кэшируем обработку данных с помощью useMemo
   const processedData = useMemo(() => {
@@ -159,10 +161,10 @@ const FamilyTree: React.FC = () => {
             const childY = childCard.y - cardHeight/2;
 
             return (
-              <React.Fragment key={`lines-${childCard.person.name}-${index}`}>
+              <React.Fragment key={`lines-${childCard.person.lastName}-${childCard.person.firstName}-${index}`}>
                 {fatherCard && (
                   <line
-                    key={`line-${childCard.person.name}-father-${index}`}
+                    key={`line-${childCard.person.lastName}-${childCard.person.firstName}-father-${index}`}
                     x1={childX}
                     y1={childY}
                     x2={fatherCard.x}
@@ -175,7 +177,7 @@ const FamilyTree: React.FC = () => {
                 )}
                 {motherCard && (
                   <line
-                    key={`line-${childCard.person.name}-mother-${index}`}
+                    key={`line-${childCard.person.lastName}-${childCard.person.firstName}-mother-${index}`}
                     x1={childX}
                     y1={childY}
                     x2={motherCard.x}
@@ -195,8 +197,10 @@ const FamilyTree: React.FC = () => {
         <div className="relative z-10 h-full">
           {cardPositions.map((card, index) => (
             <Card
-              key={`${card.person.name}-${index}`}
-              name={card.person.name}
+              key={`${card.person.lastName}-${card.person.firstName}-${index}`}
+              lastName={card.person.lastName}
+              firstName={card.person.firstName}
+              middleName={card.person.middleName}
               yearsOfLife={card.person.yearsOfLife}
               photoUrl={card.person.photoUrl}
               relationship={card.relationship}
@@ -212,6 +216,45 @@ const FamilyTree: React.FC = () => {
         <PersonModal
           person={selectedPerson}
           onClose={handleCloseModal}
+        />
+      )}
+
+      {/* Кнопка JSON в углу экрана */}
+      <button
+        className="fixed top-4 right-4 z-[70] text-gray-500 hover:text-gray-700 cursor-pointer bg-white hover:bg-gray-100 px-3 py-1 rounded-md text-sm font-medium shadow-md"
+        onClick={() => setShowJsonModal(true)}
+      >
+        JSON
+      </button>
+
+      {/* JSON модалка */}
+      {showJsonModal && (
+        <JsonModal
+          data={selectedPerson ? (data as Person[]).find(p => p.id === selectedPerson.id) : data}
+          onClose={() => setShowJsonModal(false)}
+          onSave={(newData) => {
+            // Обновляем данные и пересчитываем позиции
+            const updatedData = selectedPerson 
+              ? (data as Person[]).map(person => person.id === selectedPerson.id ? newData : person)
+              : newData as Person[];
+            
+            // Здесь можно добавить логику для сохранения данных
+            
+            // Обновляем данные выбранного человека в модалке
+            if (selectedPerson) {
+              const updatedPerson = processedData.find(p => p.id === selectedPerson.id);
+              if (updatedPerson) {
+                const fullPersonData = updatedData.find(p => p.id === selectedPerson.id);
+                setSelectedPerson({
+                  ...updatedPerson,
+                  description: fullPersonData?.description || '',
+                  additionalPhotos: fullPersonData?.additionalPhotos || []
+                });
+              }
+            }
+            
+            setShowJsonModal(false);
+          }}
         />
       )}
     </div>
