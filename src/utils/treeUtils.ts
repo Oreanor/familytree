@@ -8,17 +8,19 @@ export const processPerson = (personId: string, data: Person[]): ProcessedPerson
   const person = data.find((p) => p.id === personId);
   if (!person || !person.birthDate) return undefined;
   
-  // Форматируем имя как "Фамилия И.О."
-  const lastName = person.lastName || '';
-  const firstNameInitial = person.firstName ? person.firstName.charAt(0) + '.' : '';
-  const middleNameInitial = person.middleName ? person.middleName.charAt(0) + '.' : '';
-  const formattedName = `${lastName} ${firstNameInitial} ${middleNameInitial}`.trim();
-  
   return {
     id: person.id,
-    name: formattedName,
-    yearsOfLife: formatYearsOfLife(person.birthDate, person.deathDate || undefined),
+    lastName: person.lastName,
+    firstName: person.firstName,
+    middleName: person.middleName,
+    birthDate: person.birthDate,
+    deathDate: person.deathDate,
+    fatherId: person.fatherId,
+    motherId: person.motherId,
     photoUrl: person.photoUrl,
+    description: person.description,
+    additionalPhotos: person.additionalPhotos,
+    yearsOfLife: formatYearsOfLife(person.birthDate, person.deathDate || undefined),
     father: person.fatherId ? processPerson(person.fatherId, data) : undefined,
     mother: person.motherId ? processPerson(person.motherId, data) : undefined
   };

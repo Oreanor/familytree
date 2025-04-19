@@ -198,9 +198,7 @@ const FamilyTree: React.FC = () => {
           {cardPositions.map((card, index) => (
             <Card
               key={`${card.person.lastName}-${card.person.firstName}-${index}`}
-              lastName={card.person.lastName}
-              firstName={card.person.firstName}
-              middleName={card.person.middleName}
+              name={`${card.person.lastName} ${card.person.firstName} ${card.person.middleName}`.trim()}
               yearsOfLife={card.person.yearsOfLife}
               photoUrl={card.person.photoUrl}
               relationship={card.relationship}

@@ -1,9 +1,9 @@
 export interface Person {
   id: string;
-  lastName?: string;
-  firstName?: string;
-  middleName?: string;
-  birthDate?: string;
+  lastName: string;
+  firstName: string;
+  middleName: string;
+  birthDate: string;
   deathDate?: string;
   fatherId?: string;
   motherId?: string;
@@ -15,18 +15,10 @@ export interface Person {
   }>;
 }
 
-export interface ProcessedPerson {
-  id: string;
-  name: string;
-  yearsOfLife: string;
-  photoUrl?: string;
+export interface ProcessedPerson extends Person {
   father?: ProcessedPerson;
   mother?: ProcessedPerson;
-  description?: string;
-  additionalPhotos?: Array<{
-    url: string;
-    caption: string;
-  }>;
+  yearsOfLife: string;
 }
 
 export interface PersonModalProps {
