@@ -1,0 +1,389 @@
+[
+    {
+      "id": "1",
+      "lastName": "Никонец",
+      "firstName": "Сергей",
+      "middleName": "Владимирович",
+      "birthDate": "1980-07-25",
+      "deathDate": null,
+      "fatherId": "2",
+      "motherId": "3",
+      "photoUrl": "/photos/sergey-nikonets.jpg",
+      "description": "Основатель семейного бизнеса в сфере IT. Разработал несколько успешных проектов в области искусственного интеллекта."
+
+    },
+    {
+      "id": "2",
+      "lastName": "Никонец",
+      "firstName": "Владимир",
+      "middleName": "Павлович",
+      "birthDate": "1955-03-20",
+      "deathDate": "2018-11-10",
+      "fatherId": "4",
+      "motherId": "5",
+      "photoUrl": "/photos/vladimir-nikonets.jpg",
+      "description": "Профессор математики, доктор физико-математических наук. Автор множества научных работ по теории вероятностей.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/vladimir-lecture.jpg",
+          "caption": "На лекции 1 в университете, 1995"
+        },
+        {
+          "url": "/photos/vladimir-lecture.jpg",
+          "caption": "На лекции 2 в университете, 1997"
+        },
+        {
+          "url": "/photos/vladimir-lecture.jpg",
+          "caption": "На лекции 3 в университете, 1999"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "lastName": "Мать",
+      "firstName": "Елена",
+      "middleName": "Петровна",
+      "birthDate": "1957-08-12",
+      "deathDate": null,
+      "fatherId": "6",
+      "motherId": "7",
+      "photoUrl": "/photos/elena-nikonets.jpg",
+      "description": "Врач-терапевт с 40-летним стажем работы. Заслуженный врач РФ.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/elena-hospital.jpg",
+          "caption": "В больнице, 2010"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "lastName": "Дед1",
+      "firstName": "Иван",
+      "middleName": "Сергеевич",
+      "birthDate": "1925-06-30",
+      "deathDate": "1995-04-15",
+      "fatherId": "8",
+      "motherId": "9",
+      "photoUrl": "/photos/ivan-nikonets.jpg",
+      "description": "Участник Великой Отечественной войны. После войны работал инженером на заводе.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/ivan-war.jpg",
+          "caption": "На фронте, 1944"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "lastName": "Бабушка1",
+      "firstName": "Мария",
+      "middleName": "Ивановна",
+      "birthDate": "1928-09-25",
+      "deathDate": "2002-07-18",
+      "fatherId": "10",
+      "motherId": "11",
+      "photoUrl": "/photos/maria-nikonets.jpg",
+      "description": "Учительница начальных классов. Проработала в школе 35 лет.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/maria-school.jpg",
+          "caption": "С учениками, 1960"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "lastName": "Дед2",
+      "firstName": "Петр",
+      "middleName": "Александрович",
+      "birthDate": "1930-12-10",
+      "deathDate": "2005-03-22",
+      "fatherId": "12",
+      "motherId": "13",
+      "photoUrl": "/photos/petr-petrov.jpg",
+      "description": "Инженер-строитель. Участвовал в строительстве многих важных объектов города.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/petr-construction.jpg",
+          "caption": "На строительной площадке, 1975"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "lastName": "Бабушка2",
+      "firstName": "Анна",
+      "middleName": "Николаевна",
+      "birthDate": "1932-04-18",
+      "deathDate": "2010-09-30",
+      "fatherId": "14",
+      "motherId": "15",
+      "photoUrl": "/photos/anna-petrov.jpg",
+      "description": "Библиотекарь. Организовала первую городскую библиотеку.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/anna-library.jpg",
+          "caption": "В библиотеке, 1980"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "lastName": "Прадед1",
+      "firstName": "Сергей",
+      "middleName": "Александрович",
+      "birthDate": "1900-03-15",
+      "deathDate": "1975-08-20",
+      "fatherId": "16",
+      "motherId": "17",
+      "photoUrl": "/photos/sergey-nikonets.jpg",
+      "description": "Крестьянин, работал в колхозе.",
+      "additionalPhotos": []
+    },
+    {
+      "id": "9",
+      "lastName": "Прабабушка1",
+      "firstName": "Екатерина",
+      "middleName": "Михайловна",
+      "birthDate": "1902-11-30",
+      "deathDate": "1980-04-15",
+      "fatherId": "18",
+      "motherId": "19",
+      "photoUrl": "/photos/ekaterina-nikonets.jpg",
+      "description": "Домохозяйка.",
+      "additionalPhotos": []
+    },
+    {
+      "id": "10",
+      "lastName": "Прадед2",
+      "firstName": "Иван",
+      "middleName": "Николаевич",
+      "birthDate": "1898-07-25",
+      "deathDate": "1970-12-10",
+      "fatherId": "20",
+      "motherId": "21",
+      "photoUrl": "/photos/ivan-nikonets.jpg",
+      "description": "Учитель в сельской школе.",
+      "additionalPhotos": []
+    },
+    {
+      "id": "11",
+      "lastName": "Прабабушка2",
+      "firstName": "Анна",
+      "middleName": "Сергеевна",
+      "birthDate": "1901-09-18",
+      "deathDate": "1978-06-30",
+      "fatherId": "22",
+      "motherId": "23",
+      "photoUrl": "/photos/anna-nikonets.jpg",
+      "description": "Учительница. Преподавала в сельской школе.",
+      "additionalPhotos": []
+    },
+    {
+      "id": "12",
+      "lastName": "Петров",
+      "firstName": "Александр",
+      "middleName": "Иванович",
+      "birthDate": "1890-03-15",
+      "deathDate": "1950-06-20",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/alexandr-petrov.jpg",
+      "description": "Железнодорожник. Проработал на железной дороге 40 лет.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/alexandr-railway.jpg",
+          "caption": "На работе, 1930"
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "lastName": "Петрова",
+      "firstName": "Мария",
+      "middleName": "Сергеевна",
+      "birthDate": "1892-09-10",
+      "deathDate": "1965-12-25",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/maria-petrov.jpg",
+      "description": "Швея. Имела свою мастерскую по пошиву одежды.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/maria-sewing.jpg",
+          "caption": "В мастерской, 1940"
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "lastName": "Николаев",
+      "firstName": "Николай",
+      "middleName": "Андреевич",
+      "birthDate": "1905-12-01",
+      "deathDate": "1955-07-30",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/placeholder-male.jpg",
+      "description": "Кузнец. Был известен своим мастерством на всю округу.",
+      "additionalPhotos": []
+    },
+    {
+      "id": "15",
+      "lastName": "Николаева",
+      "firstName": "Ольга",
+      "middleName": "Ивановна",
+      "birthDate": "1907-06-25",
+      "deathDate": "1962-11-12",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/placeholder-female.jpg",
+      "description": "Учительница. Преподавала в сельской школе.",
+      "additionalPhotos": []
+    },
+    {
+      "id": "16",
+      "lastName": "Прапрадед1",
+      "firstName": "Александр",
+      "middleName": "Николаевич",
+      "birthDate": "1880-05-15",
+      "deathDate": "1945-03-20",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/alexander-nikonets.jpg",
+      "description": "Крестьянин, владелец небольшого хозяйства. Участник Первой мировой войны.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/alexander-farm.jpg",
+          "caption": "На своем хозяйстве, 1910"
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "lastName": "Прапрабабушка1",
+      "firstName": "Анна",
+      "middleName": "Петровна",
+      "birthDate": "1885-08-12",
+      "deathDate": "1950-06-30",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/anna-nikonets.jpg",
+      "description": "Домохозяйка, мать пятерых детей. Хорошо шила и вязала.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/anna-family.jpg",
+          "caption": "С семьей, 1912"
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "lastName": "Прапрадед2",
+      "firstName": "Михаил",
+      "middleName": "Иванович",
+      "birthDate": "1878-11-25",
+      "deathDate": "1942-09-15",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/mikhail-nikonets.jpg",
+      "description": "Купец второй гильдии, владелец небольшой лавки.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/mikhail-shop.jpg",
+          "caption": "В своей лавке, 1905"
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "lastName": "Прапрабабушка2",
+      "firstName": "Екатерина",
+      "middleName": "Сергеевна",
+      "birthDate": "1882-04-18",
+      "deathDate": "1948-12-25",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/ekaterina-nikonets.jpg",
+      "description": "Дочь священника, получила домашнее образование. Хорошо играла на фортепиано.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/ekaterina-piano.jpg",
+          "caption": "За фортепиано, 1900"
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "lastName": "Прапрадед3",
+      "firstName": "Николай",
+      "middleName": "Петрович",
+      "birthDate": "1875-07-30",
+      "deathDate": "1940-02-15",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/nikolay-nikonets.jpg",
+      "description": "Учитель в церковно-приходской школе. Образование получил в духовной семинарии.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/nikolay-school.jpg",
+          "caption": "С учениками, 1895"
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "lastName": "Прапрабабушка3",
+      "firstName": "Татьяна",
+      "middleName": "Александровна",
+      "birthDate": "1879-09-10",
+      "deathDate": "1945-08-20",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/tatiana-nikonets.jpg",
+      "description": "Дочь мелкого чиновника. Получила образование в женской гимназии.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/tatiana-gymnasium.jpg",
+          "caption": "Выпускной класс гимназии, 1897"
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "lastName": "Прапрадед4",
+      "firstName": "Сергей",
+      "middleName": "Михайлович",
+      "birthDate": "1876-03-15",
+      "deathDate": "1943-11-30",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/sergey-nikonets.jpg",
+      "description": "Мещанин, работал приказчиком в лавке. После революции стал рабочим на заводе.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/sergey-shop.jpg",
+          "caption": "В лавке, 1908"
+        }
+      ]
+    },
+    {
+      "id": "23",
+      "lastName": "Прапрабабушка4",
+      "firstName": "Мария",
+      "middleName": "Николаевна",
+      "birthDate": "1881-12-05",
+      "deathDate": "1947-04-18",
+      "fatherId": null,
+      "motherId": null,
+      "photoUrl": "/photos/maria-nikonets.jpg",
+      "description": "Дочь мещанина. Работала швеей, имела свою мастерскую.",
+      "additionalPhotos": [
+        {
+          "url": "/photos/maria-sewing.jpg",
+          "caption": "В своей мастерской, 1903"
+        }
+      ]
+    }
+  ]
